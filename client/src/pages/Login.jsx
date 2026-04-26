@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
@@ -27,15 +28,16 @@ function Login() {
       const res = await API.post("/auth/login", formData);
 
       if (!res?.data?.token || !res?.data?.user) {
-        alert("Login response is missing token or user data");
+        toast.error("Login response is missing token or user data");
         return;
       }
 
       login(res.data.user, res.data.token);
 
+      toast.success("Login successful!");
       navigate("/dashboard", { replace: true });
     } catch (error) {
-      alert(error.response?.data?.message || "Login failed");
+      toast.error(error.response?.data?.message || "Login failed");
     }
   };
 
