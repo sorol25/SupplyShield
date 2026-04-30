@@ -1,10 +1,8 @@
-def get_risk_level(probability: float) -> str:
-	return "HIGH" if probability > 0.6 else "LOW"
+import os
 
+def ensure_model_dir():
+    if not os.path.exists("model"):
+        os.makedirs("model")
 
-def get_recommendation(probability: float) -> str:
-	if probability > 0.75:
-		return "Immediate mitigation needed: reroute shipment and notify operations"
-	if probability > 0.6:
-		return "Use alternate vendor or expedited route"
-	return "Proceed with current plan"
+if __name__ == "__main__":
+    ensure_model_dir()
